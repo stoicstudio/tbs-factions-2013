@@ -1,0 +1,1 @@
+ALTER TABLE `account_info` ADD COLUMN `ach_elo` INT(4) NOT NULL DEFAULT '0'  AFTER `ach_win` , ADD COLUMN `ach_unit_kill` INT(4) NOT NULL DEFAULT '0'  AFTER `ach_elo` ;

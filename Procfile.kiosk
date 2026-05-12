@@ -1,0 +1,1 @@
+web: java -cp target/classes:target/dependency/*:config -Dlog4j.root.level=$LOG4J_ROOT_LEVEL -Dlog4j.configuration=log4j.xml $JAVA_OPTS -javaagent:newrelic/newrelic.jar -javaagent:heroku-javaagent-1.2.jar=stdout=true tbs.srv.web.WebMain --worker

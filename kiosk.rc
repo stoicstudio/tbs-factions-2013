@@ -1,0 +1,15 @@
+export BUILD_NUMBER="locally"
+export RABBIT_URL="amqp://localhost"
+export GAME_ENVIRONMENT="dev-john-atomical"
+export JAVA_OPTS="-Xmx384m -Xss512k -XX:+UseCompressedOops"
+export RDS_PASSWORD=""
+export RDS_URL="localhost/dev_root"
+export RDS_USERNAME="root"
+export VBB_PASSWORD="nope"
+export DATA_URL="/Users/john/stoic/tbs/assets"
+export STEAM_ALWAYS_AUTHENTICATE="true"
+export KIOSK="true"
+export NEW_RELIC_LICENSE_KEY=""
+export VBB_ENABLED=false
+export STEAM_TXN_FORCE_FINALIZE=true
+export STEAM_MICRO_TXN_SANDBOX=true

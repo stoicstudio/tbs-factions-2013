@@ -1,0 +1,5 @@
+ALTER TABLE `vs_find`
+ADD COLUMN `min_timer` INT(4) NULL DEFAULT NULL  AFTER `vs_serverstopped` , ADD COLUMN `scene` VARCHAR(45) NULL DEFAULT NULL  AFTER `min_timer` , ADD COLUMN `friendly` TINYINT(4) NULL DEFAULT NULL  AFTER `scene` ;
+
+
+ALTER TABLE `battle` ADD COLUMN `timer` INT(4) NULL DEFAULT NULL  AFTER `starting_team` , ADD COLUMN `friendly` TINYINT NULL DEFAULT NULL  AFTER `timer` ;

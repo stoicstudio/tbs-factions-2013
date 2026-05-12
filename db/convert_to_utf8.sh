@@ -1,0 +1,2 @@
+mysql --host=tbs-db-scratch2.chmnovkb0dsh.us-east-1.rds.amazonaws.com --database=dev_live --user=stoicdb --password=$DB_PASSWD -B -N -e "SHOW TABLES" | awk '{print "SET foreign_key_checks = 0; ALTER TABLE", $1, "CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci; SET foreign_key_checks = 1; "}' | mysql --host=tbs-db-scratch2.chmnovkb0dsh.us-east-1.rds.amazonaws.com --database=dev_live --user=stoicdb --password=$DB_PASSWD
+

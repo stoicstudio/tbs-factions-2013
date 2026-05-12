@@ -1,0 +1,1 @@
+ALTER TABLE `account_info` ADD COLUMN `ach_streak` INT(4) NOT NULL DEFAULT '0'  AFTER `ach_unit_kill` ;

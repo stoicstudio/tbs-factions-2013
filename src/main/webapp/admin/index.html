@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Admin Page</title>
+
+<style type="text/css">
+.errorText {
+	min-height: 20px;
+	height: auto !important;
+	height: 20px;
+}
+</style>
+</head>
+<body>
+
+	<script type="text/javascript"
+		src=" https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+
+	<script type="text/javascript">
+		console.log("Starting Admin Script");
+
+		function getParameterByName(name) {
+			name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+			var regexS = "[\\?&]" + name + "=([^&#]*)";
+			var regex = new RegExp(regexS);
+			var results = regex.exec(window.location.search);
+			if (results == null)
+				return "";
+			else
+				return decodeURIComponent(results[1].replace(/\+/g, " "));
+		}
+
+		function initSystemMsg() {
+			console.log("initSystemMsg");
+
+			var admin_key = $("#txt_admin_key").val();
+			var url = "/services/admin/system_msg/0/" + admin_key;
+
+			var result = $.getJSON(url, function(data) {
+				console.log(data);
+				$.each(data, function(i, item) {
+					console.log(i);
+					console.log(item);
+					if (i == "msg") {
+						$("#txt_system_msg").val(item);
+					}
+				});
+			});
+		}
+
+		function initSystemVitals() {
+
+			var admin_key = $("#txt_admin_key").val();
+			var url = "/services/admin/status/0/" + admin_key;
+
+			console.log("initSystemVitals " + url);
+			$
+					.getJSON(
+							url,
+							function(data) {
+
+								var t = "BATTLES:<br><table border=1 cellspacing=0 cellpadding=4>";
+								$.each(data, function(key, val) {
+
+									console.log("initSystemVitals key=" + key
+											+ " val=" + val);
+									t += "<tr><td>" + key + "</td><td>" + val
+											+ "</td></tr>";
+								});
+
+								t += "</table>";
+
+								console.log("table=" + t);
+								$("#div_battle_vitals").html(t);
+							});
+
+		}
+
+		$(document).ready(function() {
+
+			var admin_key = getParameterByName("admin_key");
+			if (admin_key != null) {
+				$("#txt_admin_key").val(admin_key);
+				handleFormCredentialsSubmit();
+			}
+
+		});
+
+		function handleFormSystemMsgSubmit() {
+			console.log("/services/admin/system_msg");
+			var admin_key = $("#txt_admin_key").val();
+			var data = $("#txt_system_msg").val();
+			console.log(admin_key);
+			console.log(data);
+			var url = "/services/admin/system_msg/0/" + admin_key;
+			console.log(url);
+			var result = $.post(url, data, function(data, status, xhr) {
+				console.log("always " + this);
+				$("#err_system_msg").html(
+						xhr.status + ":" + xhr.statusText);
+				if (xhr.status == 200) {
+					$('#err_system_msg').css('background-color', '#0000ff');
+				} else {
+					$('#err_system_msg').css('background-color', '#ff0000');
+				}
+			});
+		}
+
+		function handleFormQSubmit() {
+
+			var txt_q = $("#txt_q").val();
+
+			var admin_key = $("#txt_admin_key").val();
+			var data = $("#txt_system_msg").val();
+			console.log(admin_key);
+			console.log(data);
+			var url = "/services/admin/peek_q/0/" + admin_key + "/" + txt_q;
+			console.log(url);
+			$.getJSON(url, function(data) {
+
+				var t = "Q " + txt_q
+						+ ":<br><pre><table border=1 cellspacing=0 cellpadding=4>";
+				$.each(data, function(key, val) {
+
+					t += "<tr><td>" + key + "</td><td>" + JSON.stringify(val) + "</td></tr>";
+				});
+
+				t += "</table></pre>";
+
+				console.log("table=" + t);
+				
+				$("#div_q").html(t);
+			});
+		}
+
+		function handleFormCredentialsSubmit() {
+			initSystemMsg();
+			initSystemVitals();
+		}
+	</script>
+
+	<h2>Credentials</h2>
+	<form name="form_credentials"
+		action="JavaScript:handleFormCredentialsSubmit();">
+		<input id="txt_admin_key" name="txt_admin_key" value="xyz" /> <br>
+		<input type="submit" value="Submit">
+	</form>
+	<br>
+
+	<h2>System Message</h2>
+
+	<form name="form_system_msg"
+		action="JavaScript:handleFormSystemMsgSubmit();">
+		<textarea cols="40" rows="2" name="txt_system_msg" id="txt_system_msg"></textarea>
+		<br> <input type="submit" value="Submit">
+		<div id="err_system_msg" class="errorText"></div>
+	</form>
+	
+	<br>
+	<div id="div_battle_vitals"></div>
+
+	<h2>Q</h2>
+	<form name="form_q" action="JavaScript:handleFormQSubmit();">
+		<input id="txt_q" name="txt_q" value="qqq" /> <br> <br> <input
+			type="submit" value="Submit">
+		<div id="err_system_msg" class="errorText"></div>
+	</form>
+
+	<br>
+	<div id="div_q"></div>
+
+</body>
+</html>
