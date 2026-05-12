@@ -1,0 +1,1 @@
+The contents of this repository, including code and examples, are for reference and research only.  No commercial use is permitted.
